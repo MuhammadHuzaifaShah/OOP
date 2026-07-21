@@ -7,7 +7,7 @@ class Number{
         Number(){    // <== Default Construtor
             a=0;
         }      
-        Number(int num)
+        Number(int num)  // <== Parametarized Constructor
         {
             a=num;
         }
