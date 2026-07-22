@@ -215,7 +215,7 @@ int main()
     cout << "10.Cyclic Rotate of Array 1\n";
     cout << "11.Cyclic Rotate of Array 2\n";
     cout << "12.Make Copy of Array 1\n";
-    cout << "12.Make Copy of Array 2\n";
+    cout << "13.Make Copy of Array 2\n";
     cout << "0.Exit\n";
 
     cout << "Enter Your Choice.";
@@ -261,7 +261,7 @@ int main()
             cout << "Size of Both arrays Must be same.";
             break;
         }
-        IntArray result=array1.addArrays(array2);
+        IntArray result=array1.mulArray(array2);
 
         cout << "Array 1 * Array 2 : ";
         result.display();
@@ -289,11 +289,13 @@ int main()
         IntArray result=array1.reverse();
         cout << "Reverse Array 1 : ";
         array1.display();
+        break;
     }
     case 9:{
         IntArray result=array2.reverse();
         cout << "Reverse Array 2 : ";
-        array2.display();
+        result.display();
+        break;
     }
     case 10:{
         int n;
@@ -302,7 +304,7 @@ int main()
         IntArray result=array1.cyclicRotate(n);
 
         cout << "Array 1 after Cyclic rotate : ";
-        array1.display();
+        result.display();
         break;
     }
     case 11:{
@@ -312,7 +314,7 @@ int main()
         IntArray result=array2.cyclicRotate(n);
 
         cout << "Array 2 after Cyclic rotate : ";
-        array2.display();
+        result.display();
         break;
     }
     case 12:{
@@ -323,10 +325,14 @@ int main()
         break;
     }
     case 13:{
-        IntArray cpy2(array1);
+        IntArray cpy2(array2);
 
         cout << "Copy of Array 2: ";
         cpy2.display();
+        break;
+    }
+    case 0:{
+        cout << "Exit \n";
         break;
     }
    default:
