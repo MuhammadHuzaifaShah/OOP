@@ -11,7 +11,9 @@ class IntArray{
                 for(int i=0;i<arraySize;i++){
                     arr[i]=0;                }
             }
+            else{
             arr=nullptr;
+            }
         }
         IntArray(const IntArray &obj){ // Copy Constructor
             arraySize=obj.arraySize;
@@ -32,75 +34,115 @@ class IntArray{
             }
             arraySize=0;
         }
-        void setSize(int);
-        void setArr(int,int);
+        void setSize(int s){
+            if(arr !=nullptr){
+                        delete[] arr;
+                        arr=nullptr;
+            }
+            arraySize=(s>0)?s:0;
+            if(arraySize>0){
+                arr=new int[arraySize];
+                for(int i=0;i<arraySize;i++){
+                    arr[i]=0;
+                }
+            }
+        }
+        void setArr(int idx,int val){
+            if(idx>=0 && idx<arraySize){
+                arr[idx]=val;
+            }else{
+                cout << "Invalid Index.\n";
+            }
+        }
 
-        int* getArr() const;
-        int getSize() const;
-        void display() const;
-        IntArray addArrays(const IntArray) const;
-         int &operator[](int index){
+        int* getArr() const{
+            return arr;
+        }
+        int getSize() const{
+            return arraySize;
+        }
+
+        void display() const
+        {
+            if(arr==nullptr || arraySize==0){
+                cout << "[Empty Array]";
+                return;
+            }
+            cout << "Array is : ";
+            for(int i=0;i<arraySize;i++){
+                cout << arr[i] << " ";
+            }
+
+            cout << "\n";
+        }
+
+        int &operator[](int index){
             static int dummy=-999;
-            if(index<0 || index>arraySize){
+            if(index<0 || index>=arraySize){
                 dummy=-999;
                 return dummy;
             }
             return arr[index];
          }
-}; 
-void IntArray::setSize(int s){
-    if(arr !=nullptr){
+
+         IntArray &operator+=(const IntArray &obj){
+            int newSize=arraySize+obj.arraySize;
+
+            int* temp=new int[newSize];
+            for(int i=0;i<arraySize;i++){
+                temp[i]=arr[i];
+            }
+            for(int i=0;i<obj.arraySize;i++){
+                temp[arraySize+i]=obj.arr[i];
+            }
+
+            delete[] arr;
+
+            arr=temp;
+            arraySize=newSize;
+
+            return *this;
+         }
+
+         IntArray &operator=(const IntArray &obj){
+            if(this !=&obj){
                 delete[] arr;
-                arr=nullptr;
-    }
-    arraySize=(s>0)?s:0;
-    if(arraySize>0){
-        arr=new int[arraySize];
-        for(int i=0;i<arraySize;i++){
-            arr[i]=0;
-        }
-    }
-}
-void IntArray::setArr(int idx,int val){
-    if(idx>=0 && idx<arraySize){
-        arr[idx]=val;
-    }else{
-        cout << "Invalid Index.\n";
-    }
-}
-int* IntArray::getArr() const{
-    return arr;
-}
-int IntArray::getSize() const{
-    return arraySize;
-}
-void IntArray:: display() const
-{
-    if(arr==nullptr || arraySize==0){
-        cout << "[Empty Array]";
-        return;
-    }
-    cout << "Array is : ";
-    for(int i=0;i<arraySize;i++){
-        cout << arr[i] << " ";
-    }
 
-    cout << "\n";
-}
-IntArray IntArray:: addArrays (const IntArray obj) const{
-    if(arraySize !=obj.arraySize){
-        cout << "For Addition Size of both Arrays Must be same.\n";
-    }
+                arraySize=obj.arraySize;
+                if(arraySize>0){
+                    arr=new int[arraySize];
 
-    IntArray result(arraySize);
+                    for(int i=0;i<arraySize;i++){
+                        arr[i]=obj.arr[i];
+                    }
+                }
+                else{
+                    arr=nullptr;
+                }
+             }
 
-    for(int i=0;i<arraySize;i++){
-        result.arr[i]=arr[i]+obj.arr[i];
-    }
-    return result;
-} 
+             return *this;
+         }
+}; 
+
 int main()
 {
-    
+    IntArray a1(3);
+    a1[0]=1;
+    a1[1]=2;
+    a1[2]=3;
+    a1.display();
+    IntArray a2(2);
+    a2[0]=4;
+    a2[1]=5;
+    a2.display();
+    cout << "a1[1] = " << a1[1] << " \n";
+    cout << "a2[1] = " << a2[1] << " \n";
+    a1 +=a2;
+    cout << "After oncatenating : ";
+    a1.display();
+    a1=a2;
+    cout << "After Assignment: ";
+    a1.display();
    return 0;
 }

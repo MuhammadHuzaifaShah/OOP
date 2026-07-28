@@ -90,7 +90,7 @@ int main()
     Complex c1(4,8);
     Complex c2(2,6);
 
-    Complex c=c1.add(c2);
+    Complex c=c1.subtract(c2);
 
     c.print();
    return 0;
